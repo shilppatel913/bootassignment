@@ -15,10 +15,32 @@ public class BookServiceImpl implements BookService {
 
 	private List<Book> books=new ArrayList<Book>();
 	
+	//to create a book and add it in the list using post request
+	public Book createBook(Book book) {
+		int flag=0;
+		for(Book b:books) {
+			if(b.getBookId()==book.getBookId()) {
+				flag=1;
+				break;
+			}
+		}
+		if(flag==1) {
+			System.out.println("Book is already present");
+			return null;
+		}
+		else {
+			books.add(book);
+			System.out.println("The book has been added");
+			return book;
+		}
+		
+	}
+	
+	
 	
 	
 	//to add all the books as soon as the bean of this class is created
-		@PostConstruct
+	/**	@PostConstruct
 		public void addBooks() {
 			Book b1=new Book(101,"C++","Nitesh","Rajput Publication","Computer Programming",
 					1500,240,"G452");
@@ -40,7 +62,7 @@ public class BookServiceImpl implements BookService {
 			books.add(b3);
 			books.add(b4);
 			books.add(b5);
-		}
+		} **/
 	
 	
 	@Override
@@ -86,6 +108,42 @@ public class BookServiceImpl implements BookService {
 			System.out.println("Book not found hence not deleted");
 		}
 
+	}
+
+
+
+
+	@Override
+	public void updateBook(Book book) {
+	
+		
+		for(Book b:books) {
+			if(b.getBookId()==book.getBookId()) {
+				b.setName("MongoDB");
+				System.out.println("The book has been updated successfully");
+				return;
+			}
+			
+		}
+		System.out.println("The book could not be updated as it is not present");
+		return;
+		
+	}
+
+
+
+
+	@Override
+	public void updateBookPrice(Book book,int price) {
+		for(Book b:books) {
+			if(b.getBookId()==book.getBookId()) {
+				b.setPrice(price);
+				System.out.println("the book has been updated with the given price");
+				return;
+			}
+		}
+		return;
+		
 	}
 	
 	
